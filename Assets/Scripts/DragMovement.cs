@@ -46,16 +46,33 @@ public class DragMovement : MonoBehaviour
         }
     }
 
+    private void FixedUpdate()
+    {
+        Vector2 movementDirection = rb.velocity.normalized;
+        float distanceNextFrame = rb.velocity.magnitude * Time.fixedDeltaTime;
+
+        RaycastHit2D hit = Physics2D.Raycast(transform.position, movementDirection, distanceNextFrame);
+        Debug.DrawRay(transform.position, movementDirection);
+        if (hit.collider != null && hit.collider.isTrigger)
+        {
+            OnTriggerEnter2D(hit.collider);
+        }
+    }
+
     private void OnTriggerEnter2D(Collider2D collider)
     {
+        string materialName = collider.gameObject.GetComponent<Renderer>().sharedMaterial.name;
         // Comprueba si el objeto con el que colisiona la pelota tiene el material WaterMaterial
-        if (collider.gameObject.GetComponent<Renderer>().sharedMaterial.name == "WaterMaterial")
+        switch (materialName)
         {
-            // Aquí puedes escribir el código que desees ejecutar cuando la pelota choca con el cubo con el material WaterMaterial.
-            // Por ejemplo, volver a la posición desde donde se golpeó
-            Vector3 startingPosition = new Vector3(0, 0, 0);
-            transform.position = lastPosition;
-            rb.velocity = new Vector2(0, 0);
+            case "WaterMaterial":
+                // Si choca contra el agua, vuelve a la última posición y se frena
+                transform.position = lastPosition;
+                rb.velocity = new Vector2(0, 0);
+                break;
+            case "LavaMaterial":
+                // En este caso, volveremos al punto de partida del mapa
+                break;
         }
     }
 }
