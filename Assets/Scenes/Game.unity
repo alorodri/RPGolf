@@ -278,12 +278,7 @@ Light:
   m_UseViewFrustumForShadowCasterCull: 1
   m_ShadowRadius: 0
   m_ShadowAngle: 0
---- !u!156049354 &793104243 stripped
-Grid:
-  m_CorrespondingSourceObject: {fileID: 6614252883642011437, guid: e23b0fbf6775fd0479728da325cc2eab, type: 3}
-  m_PrefabInstance: {fileID: 6614252883360612446}
-  m_PrefabAsset: {fileID: 0}
---- !u!1001 &6558544651486921161
+--- !u!1001 &1147018385
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -291,10 +286,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 6558544651023373824, guid: d7da81b7d0280cc41b4c570e22776d90, type: 3}
-      propertyPath: grid
-      value: 
-      objectReference: {fileID: 793104243}
     - target: {fileID: 6558544651023373825, guid: d7da81b7d0280cc41b4c570e22776d90, type: 3}
       propertyPath: m_RootOrder
       value: 2
@@ -341,7 +332,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6558544651023373838, guid: d7da81b7d0280cc41b4c570e22776d90, type: 3}
       propertyPath: m_Name
-      value: MapMaker
+      value: LevelManager
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
