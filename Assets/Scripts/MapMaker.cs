@@ -6,6 +6,7 @@ public class MapMaker : MonoBehaviour
 {
     public GameObject player;
     public GameObject water;
+    public GameObject wall;
     public Grid grid;
     public GameObject[] map2d;
 
@@ -25,6 +26,9 @@ public class MapMaker : MonoBehaviour
             if (row == 0 || column == 0 || row == MAP_HEIGHT - 1 || column == MAP_WIDTH - 1)
             {
                 Instantiate(water, new Vector3(column, row, 0), Quaternion.identity);
+            } else
+            {
+                if (Random.value < 0.2f) Instantiate(wall, new Vector3(column, row, 0), Quaternion.identity);
             }
         }
     }

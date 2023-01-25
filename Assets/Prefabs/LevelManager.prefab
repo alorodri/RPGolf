@@ -46,5 +46,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 1387177543949808143, guid: f9cafff30b7ce8a438316eaf7aaa67fa, type: 3}
   water: {fileID: 5198199730808029320, guid: fb4169c3769f9fe4094917767bd652a0, type: 3}
+  wall: {fileID: 5147915943649574339, guid: 543f1769edd3e804bb8bd9c2adc0859b, type: 3}
   grid: {fileID: 6614252883642011437, guid: e23b0fbf6775fd0479728da325cc2eab, type: 3}
   map2d: []
