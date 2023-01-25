@@ -28,7 +28,7 @@ public class MapMaker : MonoBehaviour
                 Instantiate(water, new Vector3(column, row, 0), Quaternion.identity);
             } else
             {
-                if (Random.value < 0.2f) Instantiate(wall, new Vector3(column, row, 0), Quaternion.identity);
+                if (Random.value < 0.05f) Instantiate(wall, new Vector3(column, row, 0), Quaternion.identity);
             }
         }
     }
