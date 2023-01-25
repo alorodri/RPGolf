@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 
 public class DragMovement : MonoBehaviour
@@ -12,12 +13,7 @@ public class DragMovement : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
-        lineRenderer = gameObject.AddComponent<LineRenderer>();
-        lineRenderer.startWidth = 0.5f;
-        lineRenderer.endWidth = 0.1f;
-        lineRenderer.startColor = Color.white;
-        lineRenderer.endColor = Color.red;
-        lineRenderer.enabled = true;
+        InitializeLineRenderer();
     }
 
     // Update is called once per frame
@@ -28,21 +24,27 @@ public class DragMovement : MonoBehaviour
         worldPos.z = 0;
 
         // paint line from ball to mouse
-        lineRenderer.SetPosition(0, transform.position);
-        lineRenderer.SetPosition(1, worldPos);
 
-        if (Input.GetMouseButtonUp(0))
+        if (rb.velocity.magnitude < 0.003f) {
+            lineRenderer.enabled = true;
+            lineRenderer.SetPosition(0, transform.position);
+            lineRenderer.SetPosition(1, Vector3.Lerp(transform.position, worldPos, 0.5f));
+            if (Input.GetMouseButtonUp(0))
+            {
+                float distance = Vector3.Distance(worldPos, transform.position);
+                Vector3 force = (worldPos - transform.position).normalized * distance * forceMultiplier;
+                lastPosition = transform.position;
+                rb.AddForce(force);
+            } else if (Input.GetMouseButtonUp(1))
+            {
+                float distance = Vector3.Distance(worldPos, transform.position);
+                Vector3 force = (worldPos - transform.position).normalized * distance * forceMultiplier;
+                lastPosition = transform.position;
+                rb.AddForce(-force);
+            }
+        } else
         {
-            float distance = Vector3.Distance(worldPos, transform.position);
-            Vector3 force = (worldPos - transform.position).normalized * distance * forceMultiplier;
-            lastPosition = transform.position;
-            rb.AddForce(force);
-        } else if (Input.GetMouseButtonUp(1))
-        {
-            float distance = Vector3.Distance(worldPos, transform.position);
-            Vector3 force = (worldPos - transform.position).normalized * distance * forceMultiplier;
-            lastPosition = transform.position;
-            rb.AddForce(-force);
+            lineRenderer.enabled = false;
         }
     }
 
@@ -55,7 +57,7 @@ public class DragMovement : MonoBehaviour
         Debug.DrawRay(transform.position, movementDirection);
         if (hit.collider != null && hit.collider.isTrigger)
         {
-            OnTriggerEnter2D(hit.collider);
+            OnTriggerEnter2D(hit.collider); // revisar como se comporta esto cuando tenga rampas y una pared o agua al final y cosas así
         }
     }
 
@@ -74,5 +76,16 @@ public class DragMovement : MonoBehaviour
                 // En este caso, volveremos al punto de partida del mapa
                 break;
         }
+    }
+
+    private void InitializeLineRenderer()
+    {
+        lineRenderer = gameObject.AddComponent<LineRenderer>();
+        lineRenderer.startWidth = 0.1f;
+        lineRenderer.endWidth = 0.1f;
+        lineRenderer.startColor = Color.white;
+        lineRenderer.endColor = Color.white;
+        lineRenderer.generateLightingData = true;
+        lineRenderer.material = AssetDatabase.LoadAssetAtPath<Material>("Assets/Materials/LineRendererMaterial.mat");
     }
 }
