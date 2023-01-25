@@ -6,6 +6,7 @@ using UnityEngine;
 public class DragMovement : MonoBehaviour
 {
     public float forceMultiplier = 10f;
+    public float triggerStopBallVelocity = 0.3f;
     private Rigidbody2D rb;
     private LineRenderer lineRenderer;
     private Vector3 lastPosition;
@@ -50,6 +51,7 @@ public class DragMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
+        StopBallWhenVelocityNearZero();
         Vector2 movementDirection = rb.velocity.normalized;
         float distanceNextFrame = rb.velocity.magnitude * Time.fixedDeltaTime;
 
@@ -87,5 +89,13 @@ public class DragMovement : MonoBehaviour
         lineRenderer.endColor = Color.white;
         lineRenderer.generateLightingData = true;
         lineRenderer.material = AssetDatabase.LoadAssetAtPath<Material>("Assets/Materials/LineRendererMaterial.mat");
+    }
+
+    private void StopBallWhenVelocityNearZero()
+    {
+        if (rb.velocity.magnitude < triggerStopBallVelocity)
+        {
+            rb.velocity = Vector3.zero;
+        }
     }
 }

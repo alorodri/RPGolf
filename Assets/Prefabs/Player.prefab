@@ -135,8 +135,8 @@ Rigidbody2D:
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
   m_Mass: 1
-  m_LinearDrag: 5
-  m_AngularDrag: 5
+  m_LinearDrag: 1
+  m_AngularDrag: 1
   m_GravityScale: 0
   m_Material: {fileID: 6200000, guid: fe085911f134e8942aa810c364b47e49, type: 2}
   m_IncludeLayers:
@@ -161,7 +161,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eb5c7a9579e74cb4ca07ad27038bfead, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  forceMultiplier: 500
+  forceMultiplier: 200
 --- !u!1 &1387177543949808143
 GameObject:
   m_ObjectHideFlags: 0
