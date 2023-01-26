@@ -10,10 +10,13 @@ public class DragMovement : MonoBehaviour
     private Rigidbody2D rb;
     private LineRenderer lineRenderer;
     private Vector3 lastPosition;
+    private bool holeFilled = false;
     // Start is called before the first frame update
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+        BallHoleDetection bhd = GameObject.FindWithTag("hole").GetComponent<BallHoleDetection>();
+        bhd.ballInHole.AddListener(BallInHole);
         InitializeLineRenderer();
     }
 
@@ -26,7 +29,7 @@ public class DragMovement : MonoBehaviour
 
         // paint line from ball to mouse
 
-        if (rb.velocity.magnitude < 0.003f) {
+        if (rb.velocity.magnitude < 0.003f && !holeFilled) {
             lineRenderer.enabled = true;
             lineRenderer.SetPosition(0, transform.position);
             lineRenderer.SetPosition(1, Vector3.Lerp(transform.position, worldPos, 0.5f));
@@ -65,7 +68,9 @@ public class DragMovement : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collider)
     {
-        string materialName = collider.gameObject.GetComponent<Renderer>().sharedMaterial.name;
+        var colliderRenderer = collider.gameObject.GetComponent<Renderer>();
+        if (colliderRenderer == null) return;
+        string materialName = colliderRenderer.sharedMaterial.name;
         // Comprueba si el objeto con el que colisiona la pelota tiene el material WaterMaterial
         switch (materialName)
         {
@@ -97,5 +102,13 @@ public class DragMovement : MonoBehaviour
         {
             rb.velocity = Vector3.zero;
         }
+    }
+
+    private void BallInHole()
+    {
+        lineRenderer.enabled = false;
+        holeFilled = true;
+        rb.velocity = Vector3.zero;
+        iTween.ScaleTo(rb.gameObject, Vector3.zero, 1f);
     }
 }

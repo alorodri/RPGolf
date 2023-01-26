@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 883008009}
   m_Layer: 2
   m_Name: Ball
-  m_TagString: Untagged
+  m_TagString: ball
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -162,6 +162,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   forceMultiplier: 200
+  triggerStopBallVelocity: 0.3
 --- !u!1 &1387177543949808143
 GameObject:
   m_ObjectHideFlags: 0
